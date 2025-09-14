@@ -26,7 +26,7 @@ public class SalariedEmployee extends Employee {
   @Override
   public String toString() {
     return String.format(
-        "SalariedEmployee[name=%s, hireDate=%s, annualSalary=%0.1f]",
+        "SalariedEmployee[name=%s, hireDate=%s, annualSalary=%01.1f]",
         this.getName(),
         this.getHireDate(),
         this.annualSalary);
