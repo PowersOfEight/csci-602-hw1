@@ -2,12 +2,11 @@ package edu.citadel.hw1;
 
 import java.time.LocalDate;
 import java.util.Objects;
-import java.util.Optional;
 
 public class HourlyEmployee extends Employee {
 
-  private double wageRate;
-  private double hoursWorked;
+  private final double wageRate;
+  private final double hoursWorked;
 
   public HourlyEmployee(String name,
       LocalDate hireDate,
@@ -18,17 +17,17 @@ public class HourlyEmployee extends Employee {
     this.hoursWorked = hoursWorked;
   }
 
-  @Override
-  public double getMonthlyPay() {
-    return (this.wageRate * this.hoursWorked);
-  }
-
   public double getWageRate() {
     return wageRate;
   }
 
   public double getHoursWorked() {
     return hoursWorked;
+  }
+
+  @Override
+  public double getMonthlyPay() {
+    return (this.wageRate * this.hoursWorked);
   }
 
   @Override
@@ -50,23 +49,24 @@ public class HourlyEmployee extends Employee {
     result = prime * result + (int) (temp ^ (temp >>> 32));
     temp = Double.doubleToLongBits(hoursWorked);
     result = prime * result + (int) (temp ^ (temp >>> 32));
+    temp = this.getName() != null ? this.getName().hashCode() : 0;
+    result = prime * result + (int) (temp ^ (temp >>> 32));
+    temp = this.getHireDate() != null ? this.getHireDate().hashCode() : 0;
+    result = prime * result + (int) (temp ^ (temp >>> 32));
     return result;
   }
 
   @Override
   public boolean equals(Object obj) {
-    // TODO: get feedback for functional equals implementation
-    return Optional.ofNullable(obj)
-        .filter(o -> o.getClass().equals(this.getClass()))
-        .map(o -> (HourlyEmployee) o)
-        .filter(other -> other.getName().equals(this.getName()))
-        .filter(other -> other.getHireDate().equals(this.getHireDate()))
-        .filter(other -> Double.compare(
-            other.getWageRate(), this.getWageRate()) == 0)
-        .filter(other -> Double.compare(
-            other.getHoursWorked(), this.getHoursWorked()) == 0)
-        .map(same -> true)
-        .orElse(false);
+    if (obj == null || this.getClass() != obj.getClass())
+      return false;
+    if (this == obj)
+      return true;
+    HourlyEmployee other = (HourlyEmployee) obj;
+    return Objects.equals(other.getName(), this.getName())
+        && Objects.equals(other.getHireDate(), this.getHireDate())
+        && Double.compare(other.getWageRate(), this.getWageRate()) == 0
+        && Double.compare(other.getHoursWorked(), this.getHoursWorked()) == 0;
   }
 
 }

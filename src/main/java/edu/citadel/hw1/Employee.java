@@ -4,8 +4,8 @@ import java.time.LocalDate;
 
 public abstract class Employee implements Comparable<Employee> {
 
-  private String name;
-  private LocalDate hireDate;
+  private final String name;
+  private final LocalDate hireDate;
 
   public Employee(String name, LocalDate hireDate) {
     this.name = name;
